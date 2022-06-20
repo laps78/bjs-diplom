@@ -1,22 +1,22 @@
 "use strist";
 
-const userForm = new UserForm();
-userForm.loginFormCallback = data => {
+const user = new UserForm();
+user.loginFormCallback = data => {
   ApiConnector.login(data , response => {
   	if(response.success)  {
       location.reload();
     } else {
-      userForm.setLoginErrorMessage(response.error);
+      user.setLoginErrorMessage(response.error);
     };
   });
 };
 
-userForm.registerFormCallback = data => {
+user.registerFormCallback = data => {
   ApiConnector.register(data, response => {
     if (response.success) {
       location.reload();
     } else {
-      userForm.setRegisterErrorMessage(response.error);
+      user.setRegisterErrorMessage(response.error);
     };
   });
 };
