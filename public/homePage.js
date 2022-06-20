@@ -10,6 +10,7 @@ logOutButton.action = data => {
     };
   });
 };
+
 ApiConnector.curremt = response => {
   if (response.success) {
     ProfileWidget.showProfile(response);
