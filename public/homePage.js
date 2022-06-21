@@ -11,25 +11,42 @@ logOutButton.action = data => {
   });
 };
 
-ApiConnector.curremt = response => {
+ApiConnector.current(response => {
   if (response.success) {
-    ProfileWidget.showProfile(response);
+    ProfileWidget.showProfile(response.data);
   } else {
-    console.log(response.error)
+    console.log(response.error);
   };
-};
+});
 
 const ratesBoard = new RatesBoard();
-/*
+
+//get & reload courses
 ratesBoard.getCourses = data => {
   ApiConnector.getStocks(response => {
     if (response.success) {
       ratesBoard.clearTable();
-      ratesBoard.fillTable();
+      ratesBoard.fillTable(response.data);
     } else {
       ratesBoard.setRatesBoardErrorMessage(response.error);
     };
   });
 };
-setInterval(ratesBoard.getCourses(), 1000 * 60);
-*/
+
+ratesBoard.getCourses();
+
+//reload courses once a minute
+let ratesReloadIntervalId = setInterval(ratesBoard.getCourses, 60000);
+
+//Money Manager code
+const moneyManager = new MoneyManager();
+moneyManager.addMoneyCallBack = data => {
+  ApiConnector.addMoney(response => {
+    if (response.success) {
+      ProfileWidget.showProfile(response.data);
+      moneyManager.setMessage(response.data);
+    } else {
+      moneyManager.setMessage(response.success, response.error);
+    };
+  });
+};
