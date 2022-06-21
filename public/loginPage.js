@@ -1,8 +1,8 @@
-"use strist";
+"use strict";
 
 const user = new UserForm();
 user.loginFormCallback = data => {
-  ApiConnector.login(data , response => {
+  ApiConnector.login(data, response => {
   	if(response.success)  {
       location.reload();
     } else {
